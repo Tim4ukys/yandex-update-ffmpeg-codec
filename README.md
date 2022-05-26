@@ -13,5 +13,5 @@ _yandex-update-ffmpeg-codec_ - это простой python3 скрипт, ко�
 
 ## Зависимости(third-party)
 
-[requests](https://github.com/psf/requests)
+[requests](https://github.com/psf/requests)</br>
 [patool](https://github.com/wummel/patool)
