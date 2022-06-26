@@ -6,17 +6,28 @@ import requests
 import json
 import os
 import tarfile
+from parse import parse
 from pyunpack import Archive
 
 CODECS_URL = "https://browser-resources.s3.yandex.net/linux/codecs.json"
 PATH_FILE_IN_ARHIVE = "./usr/lib/chromium-browser/libffmpeg.so"
 
 def getLastVersion(j : json):
-    r = "0.0.0"
+    maj = 0
+    min = 0
+    patch = 0
+
     for j_key in j:
-        if j_key > r:
-            r = j_key
-    return r
+        nmaj, nmin, npatch = parse("{}.{}.{}", j_key)
+        nmaj = int(nmaj)
+        nmin = int(nmin)
+        npatch = int(npatch)
+        if nmaj > maj or (nmaj == maj and nmin > min) or (nmaj == maj and nmin == min and npatch > patch):
+            maj = nmaj
+            min = nmin
+            patch = npatch
+
+    return "{}.{}.{}".format(maj, min, patch)
 
 # Check root
 
